@@ -17,10 +17,10 @@ class KudosViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Kudos.objects.filter(receiver=self.request.user).order_by('-created_at')
 
-    def perform_create(self, serializer):
-        receiver_id = request.data.get("receiver_id")
-        message = request.data.get("message", "")
-        sender = request.user
+    def create(self, serializer):
+        receiver_id = self.request.data.get("receiver_id")
+        message = self.request.data.get("message", "")
+        sender = self.request.user
 
         try:
             receiver = User.objects.get(id=receiver_id)
